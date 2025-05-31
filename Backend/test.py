@@ -32,6 +32,18 @@ def DB_Connect():
         result = cursor.fetchone()
         print("Current Time:", result)
 
+        # IF NOT EXISTS so that we dont make duplicate "TestPerson" tables
+        cursor.execute("""
+                    CREATE TABLE IF NOT EXISTS TestPerson (
+                    PersonID SERIAL PRIMARY KEY,
+                    LastName VARCHAR(255),
+                    FirstName VARCHAR(255),
+                    Address VARCHAR(255),
+                    City VARCHAR(255)
+                    );""")
+        connection.commit()
+        print("Table Created! Check Supabase for Table")
+
         # Close the cursor and connection
         cursor.close()
         connection.close()
